@@ -1,6 +1,7 @@
-index = 1
+require "./main"
+require './db.rb'
+# index = 1
 a = 'y'
-# task = []
 
 while a == 'y'
 
@@ -12,15 +13,16 @@ while a == 'y'
 
   puts "----------------------------"
   puts "やることを記入してください！"
+  tasks = gets.chomp
+  task = Task.new(task: tasks)
 
-  task = gets.chomp
-  puts "----------------------------"
-  puts "#{index}.#{task}"
+  tasks = []
+  tasks << task
 
-  # tasks.each do |task|
-  #   puts "#{index}.#{tasks}"
-  #   index += 1
-  # end
+  tasks.each do |task|
+    puts "----------------------------"
+    puts "#{task.info}"
+  end
 
   puts "----------------------------"
   puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
