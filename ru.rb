@@ -1,28 +1,35 @@
 require "./main"
 require './db.rb'
-# index = 1
+
 a = 'y'
 
 while a == 'y'
-
-  # if task
-  #   puts "----------------------------"
-  #   puts "現在抱えていることはこちらです。"
-  #   puts "#{index}.#{task}"
-  # end
 
   puts "----------------------------"
   puts "やることを記入してください！"
   tasks = gets.chomp
   task = Task.new(task: tasks)
 
-  tasks = []
-  tasks << task
+  puts "----------------------------"
+  puts "現在抱えているTasksは以下です"
+  puts "#{task.read}"
 
-  tasks.each do |task|
-    puts "----------------------------"
-    puts "#{task.info}"
+  puts "----------------------------"
+  puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+
+  d = gets.chomp.to_i
+
+  unless d.is_a?(Integer)
+    until d.is_a?(Integer)
+      puts "----------------------------"
+      puts "正しい番号を記入してください"
+      puts "----------------------------"
+      puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+      d = gets.chomp.to_i
+    end
   end
+
+  task.delete(d)
 
   puts "----------------------------"
   puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
