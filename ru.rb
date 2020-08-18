@@ -1,6 +1,9 @@
 # 参照
 require "./main"
 require './db.rb'
+require 'date'
+require "json"
+require "open-uri"
 
 # 変数
 a = 'y'
@@ -10,6 +13,16 @@ time = 1
 while a == 'y'
 
   if time > 1
+
+    # start
+    puts "----------------------------"
+    puts "現在時刻を確認したい方は1を日本の天気を知りたい方は2をタスクを登録したい方は３を入力してください！"
+    id = gets.chomp.to_i
+
+    date = Time.new
+    puts "----------------------------"
+    puts "現在時刻は#{date}"
+
     # create
     puts "----------------------------"
     puts "やることを記入してください！、もしなければn記入してください"
@@ -22,6 +35,29 @@ while a == 'y'
     puts "----------------------------"
     puts "現在抱えているTasksは以下です"
     puts "#{task.read}"
+
+    # update
+    puts "----------------------------"
+    puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+
+    id = gets.chomp.to_i
+
+    unless id.is_a?(Integer)
+      until id.is_a?(Integer)
+        puts "----------------------------"
+        puts "正しい番号を記入してください"
+        puts "----------------------------"
+        puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+        id = gets.chomp.to_i
+      end
+    end
+
+    puts "----------------------------"
+    puts "もし編集するタスクがありましたら編集内容を記入してください。もしキャンセルする場合はcを記入してください"
+
+    work = gets.chomp
+
+    task.update(work,id)
 
     # delete
     puts "----------------------------"
@@ -58,6 +94,11 @@ while a == 'y'
     end
 
   else
+    # start
+    date = Time.new
+    puts "----------------------------"
+    puts "現在時刻は#{date}"
+
     # create
     puts "----------------------------"
     puts "やることを記入してください！"
