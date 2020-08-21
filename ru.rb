@@ -14,7 +14,7 @@ while a == 'y'
 
     # start
     puts "----------------------------"
-    puts "現在時刻を確認したい方は1を日本の天気を知りたい方は2をタスクを登録したい方は３を入力してください！"
+    puts "現在時刻を確認したい方は1を日本の天気を知りたい方は2をタスクを登録したい方は３を止める方は４を入力してください！"
     num = gets.chomp.to_i
 
     if num == 1
@@ -27,76 +27,83 @@ while a == 'y'
       number = gets.chomp.to_i
       c = Weather.new(number: number)
       c.observation
-    elsif number == 3
+    elsif num == 3
       # create
       puts "----------------------------"
       puts "やることを記入してください！、もしなければn記入してください"
       tasks = gets.chomp
-      unless tasks == 'n'
+      if tasks == 'n'
+        puts "戻ります"
+      else
         task = Task.new(task: tasks)
-      end
+        # read
+        puts "----------------------------"
+        puts "現在抱えているTasksは以下です"
+        puts "#{task.read}"
 
-      # read
-      puts "----------------------------"
-      puts "現在抱えているTasksは以下です"
-      puts "#{task.read}"
+        # update
+        puts "----------------------------"
+        puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
 
-      # update
-      puts "----------------------------"
-      puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+        id = gets.chomp.to_i
 
-      id = gets.chomp.to_i
+        unless id.is_a?(Integer)
+          until id.is_a?(Integer)
+            puts "----------------------------"
+            puts "正しい番号を記入してください"
+            puts "----------------------------"
+            puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+            id = gets.chomp.to_i
+          end
+        end
 
-      unless id.is_a?(Integer)
-        until id.is_a?(Integer)
-          puts "----------------------------"
-          puts "正しい番号を記入してください"
-          puts "----------------------------"
-          puts "もし編集するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
-          id = gets.chomp.to_i
+        puts "----------------------------"
+        puts "もし編集するタスクがありましたら編集内容を記入してください。もしキャンセルする場合はcを記入してください"
+
+        work = gets.chomp
+
+        task.update(work,id)
+
+        # delete
+        puts "----------------------------"
+        puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+
+        d = gets.chomp.to_i
+
+        unless d.is_a?(Integer)
+          until d.is_a?(Integer)
+            puts "----------------------------"
+            puts "正しい番号を記入してください"
+            puts "----------------------------"
+            puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
+            d = gets.chomp.to_i
+          end
+        end
+
+        task.delete(d)
+
+        # 確認
+        puts "----------------------------"
+        puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
+
+        a = gets.chomp
+
+        unless a == 'y'
+          until a == 'y' || a == 'n'
+            puts "----------------------------"
+            puts "正しい番号を記入してください"
+            puts "----------------------------"
+            puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
+            a = gets.chomp
+          end
         end
       end
-
+    elsif num == 4
       puts "----------------------------"
-      puts "もし編集するタスクがありましたら編集内容を記入してください。もしキャンセルする場合はcを記入してください"
-
-      work = gets.chomp
-
-      task.update(work,id)
-
-      # delete
-      puts "----------------------------"
-      puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
-
-      d = gets.chomp.to_i
-
-      unless d.is_a?(Integer)
-        until d.is_a?(Integer)
-          puts "----------------------------"
-          puts "正しい番号を記入してください"
-          puts "----------------------------"
-          puts "もし削除するタスクがありましたら番号を記入してください。もしもうなければcを記入してください"
-          d = gets.chomp.to_i
-        end
-      end
-
-      task.delete(d)
-
-      # 確認
-      puts "----------------------------"
-      puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
-
+      puts "本当に終了しますか？本当に終了するならnを入力してください。戻るならyを入力してください"
       a = gets.chomp
-
-      unless a == 'y'
-        until a == 'y' || a == 'n'
-          puts "----------------------------"
-          puts "正しい番号を記入してください"
-          puts "----------------------------"
-          puts "まだ記入することがありましたらyを記入してください。もしもうなければnを記入してください"
-          a = gets.chomp
-        end
-      end
+    else
+      puts "正しい番号を入力してください"
     end
   # else
   #   # start
